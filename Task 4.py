@@ -1,6 +1,25 @@
-d = {}
+# (Code parser)
+data = {}
 
-for i in range(10):
-    d[i] = d.get(i, 0) + 1
+with open('input.txt', 'r') as f:
+    for line in f.readlines():
+        line = line.rstrip()
+        print(line)
 
-print(d)
+        if line == '{':
+            pass
+        elif line == '}':
+            pass
+        else:
+            line = line.split('=')
+            try:  # число
+                line[1] = int(line[1])
+
+                data[line[0]] = line[1]
+            except Exception:  # переменная
+                
+                pass
+
+    pass
+
+print(data)
