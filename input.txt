@@ -7,7 +7,7 @@ ten=-10
 b=a
 a=1337
 c=a
-}
+{
 d=a
 e=aboba
 }
