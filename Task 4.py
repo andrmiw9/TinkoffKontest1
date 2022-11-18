@@ -14,9 +14,15 @@ def is_in_data_up(subj, cur_level):
     return None
 
 
-def return_old_values(level_to_delete):
-    for
-    pass
+def is_in_data_up2(subj, cur_level):
+    l = list(range(cur_level))
+    l.reverse()
+    # print('l:', l)
+    for i in l:
+        for entry in data[i]:
+            if subj == entry:
+                return i
+    return None
 
 
 # find_in_data(5)
@@ -27,7 +33,7 @@ with open('input.txt', 'r') as f:
 
     for line in f.readlines():
         line = line.rstrip()
-        print('\n' + line)
+        # print('\n' + line)
 
         if line == '{':
             cur_lvl += 1
@@ -43,44 +49,26 @@ with open('input.txt', 'r') as f:
             line = line.split('=')
             try:  # число
                 line[1] = int(line[1])
-                print('Number')
+                # print('Number')
 
-                lvl = is_in_data_up(line[0], cur_lvl)
-                if lvl is not None:  # var in data
-                    data[lvl][line[0]] = line[1]
-                    # print(t)
-                    # t = line[1]
-                else:  # var not in data
-                    data[cur_lvl][line[0]] = line[1]
-                    # print(line[1])
+                data[cur_lvl][line[0]] = line[1]
                 # print(line[1])
 
             except Exception:  # переменная
-                print('Exception')
+                # print('Exception')
 
-                lvl1 = is_in_data_up(line[0], cur_lvl)
-                lvl2 = is_in_data_up(line[1], cur_lvl)
+                # lvl1 = is_in_data_up(line[0], cur_lvl)
+                if line[1] in data[cur_lvl]:
+                    data[cur_lvl][line[0]] = data[cur_lvl][line[1]]
+                    print(data[cur_lvl][line[0]])
+                else:
+                    lvl2 = is_in_data_up2(line[1], cur_lvl)
 
-                if lvl1 is not None and lvl2 is not None:  # both vars are in data
-                    print('both is')
-                    data[lvl1][line[0]] = data[lvl2][line[1]]
-                    print(data[lvl1][line[0]])
+                    if lvl2 is not None:
+                        data[cur_lvl][line[0]] = data[lvl2][line[1]]
+                        print(data[cur_lvl][line[0]])
+                    else:
+                        data[cur_lvl][line[0]] = 0
+                        print(0)
 
-
-                elif lvl1 is not None and lvl2 is None:  # first var is in data, its level = lvl1, second is not
-                    print('lvl1 only')
-                    data[lvl1][line[0]] = 0
-                    print(0)
-
-                elif lvl1 is None and lvl2 is not None:  # second in data, first not
-                    print('lvl2 only')
-                    t = data[lvl2][line[1]]
-                    data[cur_lvl][line[0]] = t
-                    print(t)
-
-                else:  # both vars are not in data
-                    print('both not')
-                    data[cur_lvl][line[0]] = 0
-                    print(0)
-
-    print(data)
+    # print(data)
